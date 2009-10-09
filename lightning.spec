@@ -7,6 +7,7 @@ License:	GPLv3
 Group:		Development/Other
 Source0:	http://git.savannah.gnu.org/cgit/lightning.git/snapshot/lightning-master.tar.gz
 URL:		http://www.gnu.org/software/lightning/
+Buildroot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
 %description
 GNU lightning is a library that generates assembly language code at run-time;
