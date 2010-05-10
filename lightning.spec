@@ -1,13 +1,17 @@
 Name:		lightning
 # 1.2.c is last release, but use a git snapshot with known bug fixes
 Version:	1.2.c.20091009
-Release:	%mkrel 1
+Release:	%mkrel 2
 Summary:	Portable just-in-time compiler library
 License:	GPLv3
 Group:		Development/Other
 Source0:	http://git.savannah.gnu.org/cgit/lightning.git/snapshot/lightning-master.tar.gz
 URL:		http://www.gnu.org/software/lightning/
 Buildroot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
+
+BuildRequires:	help2man
+BuildRequires:	info-install
+BuildRequires:	texinfo
 
 %description
 GNU lightning is a library that generates assembly language code at run-time;
