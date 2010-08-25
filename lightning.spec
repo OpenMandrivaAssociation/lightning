@@ -1,10 +1,14 @@
 Name:		lightning
 # 1.2.c is last release, but use a git snapshot with known bug fixes
-Version:	1.2.c.20100816
+Version:	1.2.c.20100825
 Release:	%mkrel 1
 Summary:	Portable just-in-time compiler library
 License:	GPLv3
 Group:		Development/Other
+
+# Actually using:
+#	http://github.com/pcpa/lightning/archives/master
+#	then unpacking/renaming base directory and packing again
 Source0:	http://git.savannah.gnu.org/cgit/lightning.git/snapshot/lightning-master.tar.gz
 URL:		http://www.gnu.org/software/lightning/
 Buildroot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
@@ -23,7 +27,8 @@ instruction set inspired by the MIPS and SPARC chips.
 %setup -q -n %{name}-master
 
 %build
-%configure
+# -D_ASM_SAFETY=1 known currently broken on x86_64 (work in progress - mostly wrong assertions)
+%configure --disable-assertions
 %make
 
 %check
