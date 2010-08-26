@@ -1,6 +1,6 @@
 Name:		lightning
 # 1.2.c is last release, but use a git snapshot with known bug fixes
-Version:	1.2.c.20100825
+Version:	1.2.c.20100826
 Release:	%mkrel 1
 Summary:	Portable just-in-time compiler library
 License:	GPLv3
