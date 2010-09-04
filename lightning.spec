@@ -1,6 +1,6 @@
 Name:		lightning
 # 1.2.c is last release, but use a git snapshot with known bug fixes
-Version:	1.2.c.20100826
+Version:	1.2.c.20100903
 Release:	%mkrel 1
 Summary:	Portable just-in-time compiler library
 License:	GPLv3
@@ -27,8 +27,7 @@ instruction set inspired by the MIPS and SPARC chips.
 %setup -q -n %{name}-master
 
 %build
-# -D_ASM_SAFETY=1 known currently broken on x86_64 (work in progress - mostly wrong assertions)
-%configure --disable-assertions
+%configure
 %make
 
 %check
