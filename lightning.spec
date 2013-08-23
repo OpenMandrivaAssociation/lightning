@@ -1,82 +1,63 @@
 Name:		lightning
-# 1.2.c is last release, but use a git snapshot with known bug fixes
-Version:	1.2.c.20100903
-Release:	2
+Version:	2.0.0
+Release:	1
 Summary:	Portable just-in-time compiler library
-License:	GPLv3
-Group:		Development/Other
-
-# Actually using:
-#	http://github.com/pcpa/lightning/archives/master
-#	then unpacking/renaming base directory and packing again
-Source0:	http://git.savannah.gnu.org/cgit/lightning.git/snapshot/lightning-master.tar.gz
+License:	LGPLv3+
+Source0:	ftp://ftp.gnu.org/gnu/lightning/lightning-2.0.0.tar.gz
+Source1:	%{name}.rpmlintrc
 URL:		http://www.gnu.org/software/lightning/
-
-BuildRequires:	help2man
-BuildRequires:	info-install
-BuildRequires:	texinfo
+BuildRequires:	binutils-devel
 
 %description
 GNU lightning is a library that generates assembly language code at run-time;
 it is very fast, making it ideal for Just-In-Time compilers, and it abstracts
 over the target CPU, as it exposes to the clients a standardized RISC
-instruction set inspired by the MIPS and SPARC chips.
+instruction set inspired by the MIPS and SPARC chips. 
+
+%package	devel
+Summary:	Development tools for the GNU lightning
+Requires:	%{name} = %{version}-%{release}
+Requires(post):	/sbin/install-info
+Requires(preun):/sbin/install-info
+
+%description devel
+The libraries, header files and documentation for using GNU lightning.
 
 %prep
-%setup -q -n %{name}-master
+%setup -q
 
 %build
-%configure
-%make
+%configure --disable-static
+make %{?_smp_mflags}
+
+%install
+make install DESTDIR=%{buildroot}
+rm %{buildroot}%{_libdir}/lib%{name}.la %{buildroot}%{_infodir}/dir
 
 %check
 make check
 
-%install
-%makeinstall_std
+%post devel
+if [ -f %{_infodir}/%{name}.info.gz ]; then
+    /sbin/install-info %{_infodir}/%{name}.info.gz %{_infodir}/dir || :
+fi
+exit 0
+
+%preun devel
+if [ $1 = 0 ]; then
+    if [ -f %{_infodir}/%{name}.info.gz ]; then
+        /sbin/install-info --delete %{_infodir}/%{name}.info.gz %{_infodir}/dir || :
+    fi
+fi
+exit 0
 
 %files
-%{_bindir}/lightningize
+%doc AUTHORS COPYING COPYING.LESSER NEWS README THANKS
+%{_libdir}/lib%{name}.so.*
+
+%files	devel
+%doc ChangeLog COPYING.DOC
 %{_includedir}/%{name}.h
-%dir %{_includedir}/%{name}
-%{_includedir}/%{name}/*
-%{_datadir}/%{name}/Makefile.am
-%{_datadir}/aclocal/%{name}.m4
+%{_includedir}/%{name}
+%{_libdir}/lib%{name}.so
 %{_infodir}/%{name}.info*
-%{_mandir}/man1/lightningize.1*
-
-
-%changelog
-* Sat Sep 04 2010 Paulo Andrade <pcpa@mandriva.com.br> 1.2.c.20100903-1mdv2011.0
-+ Revision: 575709
-+ rebuild (emptylog)
-
-* Fri Aug 27 2010 Paulo Andrade <pcpa@mandriva.com.br> 1.2.c.20100826-1mdv2011.0
-+ Revision: 573448
-+ rebuild (emptylog)
-
-* Wed Aug 25 2010 Paulo Andrade <pcpa@mandriva.com.br> 1.2.c.20100825-1mdv2011.0
-+ Revision: 573350
-- Update to a new git snapshot
-
-* Mon Aug 16 2010 Paulo Andrade <pcpa@mandriva.com.br> 1.2.c.20100816-1mdv2011.0
-+ Revision: 570583
-- Update to latest git master
-
-* Tue Aug 10 2010 Paulo Andrade <pcpa@mandriva.com.br> 1.2.c.20100810-1mdv2011.0
-+ Revision: 568838
-- Update to new git snapshot
-
-* Fri Jul 30 2010 Paulo Andrade <pcpa@mandriva.com.br> 1.2.c.20100730-1mdv2011.0
-+ Revision: 563811
-- Update to a newer git snapshot.
-
-* Mon May 10 2010 Paulo Andrade <pcpa@mandriva.com.br> 1.2.c.20091009-2mdv2010.1
-+ Revision: 544445
-+ rebuild (emptylog)
-
-* Fri Oct 09 2009 Paulo Andrade <pcpa@mandriva.com.br> 1.2.c.20091009-1mdv2010.0
-+ Revision: 456467
-- Import GNU lightning.
-- lightning
-
