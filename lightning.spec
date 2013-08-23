@@ -9,6 +9,7 @@ Source0:	ftp://ftp.gnu.org/gnu/lightning/lightning-2.0.0.tar.gz
 Source1:	%{name}.rpmlintrc
 URL:		http://www.gnu.org/software/lightning/
 BuildRequires:	binutils-devel
+BuildRequires:	texinfo
 
 %description
 GNU lightning is a library that generates assembly language code at run-time;
