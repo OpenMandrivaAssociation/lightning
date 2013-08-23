@@ -27,7 +27,7 @@ The libraries, header files and documentation for using GNU lightning.
 %setup -q
 
 %build
-%configure --disable-static
+%configure2_5x --disable-static
 make %{?_smp_mflags}
 
 %install
