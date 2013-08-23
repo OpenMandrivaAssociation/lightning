@@ -1,3 +1,5 @@
+%define _disable_ld_no_undefined 1
+
 Name:		lightning
 Version:	2.0.0
 Release:	1
@@ -17,8 +19,6 @@ instruction set inspired by the MIPS and SPARC chips.
 %package	devel
 Summary:	Development tools for the GNU lightning
 Requires:	%{name} = %{version}-%{release}
-Requires(post):	/sbin/install-info
-Requires(preun):/sbin/install-info
 
 %description devel
 The libraries, header files and documentation for using GNU lightning.
@@ -27,29 +27,14 @@ The libraries, header files and documentation for using GNU lightning.
 %setup -q
 
 %build
-%configure2_5x --disable-static
+%configure --disable-static
 make %{?_smp_mflags}
 
 %install
 make install DESTDIR=%{buildroot}
-rm %{buildroot}%{_libdir}/lib%{name}.la %{buildroot}%{_infodir}/dir
 
 %check
 make check
-
-%post devel
-if [ -f %{_infodir}/%{name}.info.gz ]; then
-    /sbin/install-info %{_infodir}/%{name}.info.gz %{_infodir}/dir || :
-fi
-exit 0
-
-%preun devel
-if [ $1 = 0 ]; then
-    if [ -f %{_infodir}/%{name}.info.gz ]; then
-        /sbin/install-info --delete %{_infodir}/%{name}.info.gz %{_infodir}/dir || :
-    fi
-fi
-exit 0
 
 %files
 %doc AUTHORS COPYING COPYING.LESSER NEWS README THANKS
