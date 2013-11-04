@@ -1,11 +1,11 @@
 %define _disable_ld_no_undefined 1
 
 Name:		lightning
-Version:	2.0.1
+Version:	2.0.2
 Release:	1
 Summary:	Portable just-in-time compiler library
 License:	LGPLv3+
-Source0:	ftp://ftp.gnu.org/gnu/lightning/lightning-2.0.1.tar.gz
+Source0:	ftp://ftp.gnu.org/gnu/lightning/lightning-2.0.2.tar.gz
 Source1:	%{name}.rpmlintrc
 URL:		http://www.gnu.org/software/lightning/
 BuildRequires:	binutils-devel
