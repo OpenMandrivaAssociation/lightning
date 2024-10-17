@@ -10,7 +10,7 @@ Version:	2.0.3
 Release:	2
 License:	LGPLv3+
 Group:		Development/Other
-Url:		http://www.gnu.org/software/lightning/
+Url:		https://www.gnu.org/software/lightning/
 Source0:	ftp://ftp.gnu.org/gnu/lightning/%{name}-%{version}.tar.gz
 BuildRequires:	texinfo
 BuildRequires:	binutils-devel
